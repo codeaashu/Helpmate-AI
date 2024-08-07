@@ -6,7 +6,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/warrior_aashuu?style=social)](https://twitter.com/intent/follow?screen_name=warrior_aashuu)
 
 <hr>
-  <h2 align="center">🤖 Introducing to Helpmate AI 🤖</h2>
+  <h1 align="center">🤖 Introducing to Helpmate AI 🤖</h1>
   <img src="./public/Helpmate-AI.png" width="100px" />
   <br><a href="https://helpmate-ai.vercel.app/"><strong>HELPMATE - AI</strong></a>
   <h4 align="center">✦ Let's take help with your AI mate! ✦</h4>
