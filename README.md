@@ -31,6 +31,9 @@
 ` Technologies Used 💻 `
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=plastic&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=plastic&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=plastic&logo=javascript&logoColor=%23F7DF1E) <hr>
+
+https://img.shields.io/mit/license/:project
+
   
   <h1 align="center">Contributors 🫱🏻‍🫲🏼</h1>
   <a href="https://github.com/codeaashu/Helpmate-AI/graphs/contributors">
