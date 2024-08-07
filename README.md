@@ -25,7 +25,7 @@
   🎨 Sleek Design
   📈 Scalability and Performance
 ```
-<hr><div align="center">
+<div align="center">
   
 ` Technologies Used 💻 `
 
@@ -42,9 +42,6 @@ This project is licensed under the NPM or MIT License - see the [LICENSE](LICENS
 To run this web application locally, follow these steps: <br>
 `1. Clone this repository to your local machine.` <br>
 `2. Open index.html file in the web browser.` <hr>
-
-
-<hr>
 
 `Don't forget to give star this repository ⭐`
 
