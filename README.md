@@ -14,7 +14,10 @@
   ` Helpmate AI is a web app which is made using Google Gemini API where you can ask any question and you will get the answer.`
   
   <img src="./public/Helpmate Preview.jpg"/><hr>
-
+  
+  <h1 align="center">Contributors 🤝</h1>
+  <a href="https://github.com/codeaashu/Helpmate-AI/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=codeaashu/Helpmate-AI" /></a>
 </div>
 
 
