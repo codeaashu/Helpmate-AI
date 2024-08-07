@@ -15,7 +15,7 @@
   
   <img src="./public/Helpmate Preview.jpg"/><hr>
   
-  <h1 align="center">Contributors 🤝</h1>
+  <h1 align="center">Contributors 🫱🏻‍🫲🏼</h1>
   <a href="https://github.com/codeaashu/Helpmate-AI/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=codeaashu/Helpmate-AI" /></a>
 </div>
