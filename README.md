@@ -5,7 +5,16 @@
   ![GitHub forks](https://img.shields.io/github/forks/codeaashu/Helpmate-AI?style=social)
 [![Twitter Follow](https://img.shields.io/twitter/follow/warrior_aashuu?style=social)](https://twitter.com/intent/follow?screen_name=warrior_aashuu)
 
+<hr>
+  <h1 align="center">🤖 Introducing to Helpmate AI 🤖</h1>
+  <h2 align="center"> Take help with your AI mate! </h2>
+
+
+
 </div>
+
+
+
 
 # React + Vite
 
