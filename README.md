@@ -37,11 +37,16 @@
 
 This project is licensed under the NPM or MIT License - see the [LICENSE](LICENSE) file for details. <hr>
 
-` Getting Started 🚀 `
+` Getting Started 🚀 Setup Procedure ⚙️ `
 
 To run this web application locally, follow these steps: <br>
 `1. Clone this repository to your local machine.` <br>
-`2. Open index.html file in the web browser.` <hr>
+- Get API key from: [api-key](https://aistudio.google.com/app/apikey)
+`2. Open App.jsx and then open terminal then (  file in the web browser.` <hr>
+
+
+- `npm install`
+- `npm run dev`
 
 ` Contributors 🫱🏻‍🫲🏼`
 
