@@ -25,7 +25,7 @@
   🎨 Sleek Design
   📈 Scalability and Performance
 ```
-<div align="center">
+<div align="center"><hr>
   
 ` Technologies Used 💻 `
 
