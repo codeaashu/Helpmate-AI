@@ -8,7 +8,7 @@
 <hr>
   <h1 align="center">🤖 Introducing to Helpmate AI 🤖</h1>
   <img src="./public/Helpmate-AI.png" width="100px" />
-  <h2 align="center">⫘⫘⫘( Let's take help with your AI mate! )⫘⫘⫘</h2>
+  <h2 align="center">✦ Let's take help with your AI mate! ✦</h2>
 
   `Helpmate AI is a web app which is made using Google Gemini API. Where you can ask any question and you will get the answer`
 
