@@ -14,6 +14,23 @@
   ` Helpmate AI is a web app which is made using Google Gemini API where you can ask any question and you will get the answer.`
   
   <img src="./public/Helpmate Preview.jpg"/><hr>
+
+  ` Features 🌟 `
+</div>
+
+```
+  🤖 Conversational AI Interface
+  📝 Text Summarization
+  🧩 Question Answering
+  📲 Responsive Layout
+  🎨 Sleek Design
+  📈 Scalability and Performance
+```
+<hr><div align="center">
+  
+` Technologies Used 💻 `
+
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=plastic&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=plastic&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=plastic&logo=javascript&logoColor=%23F7DF1E) <hr>
   
   <h1 align="center">Contributors 🫱🏻‍🫲🏼</h1>
   <a href="https://github.com/codeaashu/Helpmate-AI/graphs/contributors">
