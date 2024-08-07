@@ -43,19 +43,16 @@ To run this web application locally, follow these steps: <br>
 `1. Clone this repository to your local machine.` <br>
 `2. Open index.html file in the web browser.` <hr>
 
-`Don't forget to give star this repository ⭐`
+` Contributors 🫱🏻‍🫲🏼`
 
-<img src="./public/Helpmate Preview.jpg"/><hr>
-
-
-
-  
-  <h1 align="center">Contributors 🫱🏻‍🫲🏼</h1>
   <a href="https://github.com/codeaashu/Helpmate-AI/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=codeaashu/Helpmate-AI" /></a>
 </div>
 
 
+`Don't forget to give star this repository ⭐`
+
+<img src="./public/Helpmate Preview.jpg"/><hr>
 
 
 # React + Vite
