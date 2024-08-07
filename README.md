@@ -35,7 +35,14 @@
 
 [![npm version](https://img.shields.io/npm/v/badge-maker.svg)](https://npmjs.org/package/badge-maker) [![npm license](https://img.shields.io/npm/l/badge-maker.svg)](https://npmjs.org/package/badge-maker) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This project is licensed under the NPM or MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the NPM or MIT License - see the [LICENSE](LICENSE) file for details. <hr>
+
+` Getting Started 🚀 `
+
+To run this web application locally, follow these steps: <br>
+`1. Clone this repository to your local machine.` <br>
+`2. Open index.html file in the web browser.` <hr>
+
 
 <hr>
 
