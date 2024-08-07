@@ -39,7 +39,7 @@ This project is licensed under the NPM or MIT License - see the [LICENSE](LICENS
 
 ` Getting Started 🚀 Setup Procedure ⚙️ `
 
-To run this web application locally, first get API key from: [api-key](https://aistudio.google.com/app/apikey)<br>
+To run this web application locally, first get google gemini API key from: [api-key](https://aistudio.google.com/app/apikey)<br>
 `1. Clone this repository to your local machine.` <br>
 `2. Open App.jsx and then open terminal.` <br>
 `3. now install npm` <br>
