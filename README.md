@@ -6,10 +6,10 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/warrior_aashuu?style=social)](https://twitter.com/intent/follow?screen_name=warrior_aashuu)
 
 <hr>
-  <h1 align="center">🤖 Introducing to Helpmate AI 🤖</h1>
+  <h2 align="center">🤖 Introducing to Helpmate AI 🤖</h2>
   <img src="./public/Helpmate-AI.png" width="100px" />
   <br><a href="https://helpmate-ai.vercel.app/"><strong>HELPMATE - AI</strong></a>
-  <h2 align="center">✦ Let's take help with your AI mate! ✦</h2>
+  <h4 align="center">✦ Let's take help with your AI mate! ✦</h4>
   
   ` Helpmate AI is a web app which is made using Google Gemini API where you can ask any question and you will get the answer.`
   
