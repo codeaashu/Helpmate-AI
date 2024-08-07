@@ -49,9 +49,9 @@ To run this web application locally, first get google gemini API key from: [api-
 ` Contributors 🫱🏻‍🫲🏼`
 
   <a href="https://github.com/codeaashu/Helpmate-AI/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=codeaashu/Helpmate-AI" /></a> <hr>
+  <img src="https://contrib.rocks/image?repo=codeaashu/Helpmate-AI" /></a><br>
 
-`Don't forget to give star this repository ⭐`
+`Don't forget to give star this repository ⭐` <hr>
 
 <img src="./public/Helpmate Preview.jpg"/><hr>
 
