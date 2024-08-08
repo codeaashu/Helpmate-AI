@@ -13,7 +13,6 @@
   
   ` Helpmate AI is a web app which is made using Google Gemini API where you can ask any question and you will get the answer.`
 <img src="./public/Helpmate Mockup.png"/>
-
   ` Features 🌟 `
 </div>
 
