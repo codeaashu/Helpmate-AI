@@ -43,7 +43,10 @@ Click the "Generate Answer" button to submit your question.
 ## Step 2: Receive Answer
 Helpmate AI will process your question using Google Gemini API and provide you with a comprehensive answer. The answer will be displayed as text in the response section.
 
-## Step 3: Testing Scenarios
+## Step 3: Performance and Response Accuracy
+Assess the speed and accuracy of responses provided by the app
+
+## Step 4: Testing Edge Cases and Scenarios
 ### Scenario 1: Basic Questions
 Ask questions that require factual information, such as:
 What is the capital of France?
@@ -63,13 +66,7 @@ Follow up with a question about the impact of the internet on society.
 Share your thoughts on the future of the internet.
 
 ### Scenario 4: Versatility Across Domains
-Ask questions spanning different fields such as science, technology, history, and entertainment.
-
-## Step 4: Performance and Response Accuracy
-Assess the speed and accuracy of responses provided by the app
-
-## Step 5: Testing Edge Cases and Scenarios
-Suggest specific cases to challenge the app’s capabilities.
+Ask questions spanning different fields such as science, technology, history, and entertainment. Suggest specific cases to challenge the app’s capabilities.<br>
 
 `Thank you for taking the time to test Helpmate AI.`
 </details><hr>
