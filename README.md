@@ -35,7 +35,7 @@
     <summary>Instructions for Testing Helpmate AI</summary>
     <a href="#"><img src="./public/technologist.png" width="150"></a> <br>
 
-## Step 1: Open the App: 
+## Step 1: Open the App
 Click on the provided link to access the app in your browser.
 User Interface: You'll be welcomed by a clean, minimalistic interface designed for ease of use. In the text box provided, type in any question you want to ask Helpmate AI.
 Click the "Generate Answer" button to submit your question.
@@ -65,17 +65,15 @@ Share your thoughts on the future of the internet.
 ### Scenario 4: Versatility Across Domains
 Ask questions spanning different fields such as science, technology, history, and entertainment.
 
-## Step 4: Performance and Response Accuracy:
+## Step 4: Performance and Response Accuracy
 Assess the speed and accuracy of responses provided by the app
 
 ## Step 5: Testing Edge Cases and Scenarios
 Suggest specific cases to challenge the app’s capabilities.
 
-## Step 6: Exploring the GitHub Repository
-Instruct judges on how to explore the codebase if needed.
-
-Thank you for taking the time to test Helpmate AI.
+`Thank you for taking the time to test Helpmate AI.`
 </details><hr>
+
 ` © License ✔️ `
 
 [![npm version](https://img.shields.io/npm/v/badge-maker.svg)](https://npmjs.org/package/badge-maker) [![npm license](https://img.shields.io/npm/l/badge-maker.svg)](https://npmjs.org/package/badge-maker) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
