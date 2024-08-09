@@ -45,25 +45,25 @@ Helpmate AI will process your question using Google Gemini API and provide you w
 
 ## Step 3: Testing Scenarios
 ### Scenario 1: Basic Questions
-- Ask questions that require factual information, such as:
-- What is the capital of France?
-- Who is the president of the United States?
-- What is the chemical symbol for gold?
+Ask questions that require factual information, such as:
+What is the capital of France?
+Who is the president of the United States?
+What is the chemical symbol for gold?
 
 ### Scenario 2: Complex Questions
-- Ask questions that require a more comprehensive understanding, such as:
-- What are the ethical implications of artificial intelligence?
-- How can I improve my writing skills?
-- What is the best way to invest in cryptocurrency?
+Ask questions that require a more comprehensive understanding, such as:
+What are the ethical implications of artificial intelligence?
+How can I improve my writing skills?
+What is the best way to invest in cryptocurrency?
 
 ### Scenario 3: Conversational Questions
-- Engage in a conversation with Helpmate AI by asking follow-on questions, providing additional information, or expressing your opinions.
+Engage in a conversation with Helpmate AI by asking follow-on questions, providing additional information, or expressing your opinions.
 Example: Ask a question about the history of the internet.
 Follow up with a question about the impact of the internet on society.
 Share your thoughts on the future of the internet.
 
-### Versatility Across Domains:
-- Ask questions spanning different fields such as science, technology, history, and entertainment.
+### Scenario 4: Versatility Across Domains
+Ask questions spanning different fields such as science, technology, history, and entertainment.
 
 ## Step 4: Performance and Response Accuracy:
 Assess the speed and accuracy of responses provided by the app
