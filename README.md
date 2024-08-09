@@ -14,7 +14,7 @@
   ` Helpmate AI is a web app which is made using Google Gemini API where you can ask any question and you will get the answer.`
   <details>
     <summary>Instructions for Testing Helpmate AI</summary>
-    <a href="#"><img src="assets/technologist.png" width="150"></a> <br>
+    <a href="#"><img src="./public/technologist.png" width="150"></a> <br>
 
 Step 1: Access the Web App
 Open your web browser and navigate to https://helpmate-ai.vercel.app/.
