@@ -88,7 +88,8 @@ To run this web application locally, first get google gemini API key from: [api-
 
 ` Contributors 🫱🏻‍🫲🏼`
 
-
+  <a href="https://github.com/codeaashu/Helpmate-AI/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=codeaashu/Helpmate-AI" /></a><br><br>
   
 `How can you contribute in this projects? 🤝`
 If you have a good knowledge in Tailwind CSS or React JS and want to contribute in this project just forked this repository and the improve the 𝐔𝐈 of Helpmate and then feel free to open an issue or submit a pull request. I reviewed your changes update and then merge your pull request. Please make sure to follow the existing code style and guidelines.
