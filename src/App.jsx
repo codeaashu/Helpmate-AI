@@ -13,7 +13,7 @@ function App() {
   async function generateAnswer(e) {
     setGeneratingAnswer(true);
     e.preventDefault();
-    setAnswer("Loading your answer... \n It might take upto 10 seconds");
+    setAnswer("Loading your answer... \n It might take up to 10 seconds");
     try {
     const response = await axios({
       url:`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
@@ -38,7 +38,7 @@ function App() {
   return (
     <>
     <div className="bg-gradient-to-r from-blue-50 to-blue-100 h-screen p-3 flex flex-col justify-center items-center">
-    <div className=' flex flex-col items-center overflow-y-auto w-full '>
+    <div className=' flex flex-col items-center overflow-y-auto  w-full overflow-x-hidden'>
       <form
         onSubmit={generateAnswer}
         className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3 text-center rounded-lg shadow-lg bg-white py-6 px-4 transition-all duration-500 transform hover:scale-105"
