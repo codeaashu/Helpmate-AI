@@ -87,7 +87,7 @@ To run this web application locally, first get google gemini API key from: [api-
 `4. then type the command (npm run dev)` <hr>
   
 `How can you contribute in this projects? 🫱🏻‍🫲🏼`
-[![Open Source Love](https://helpmate-ai.vercel.app/open-source-badges/badges/open-source-v1/open-source.svg)](https://github.com/firstcontributions/open-source-badges)
+
 If you have a good knowledge in Tailwind CSS or React JS and want to contribute in this project just forked this repository and the improve the 𝐔𝐈 of Helpmate and then feel free to open an issue or submit a pull request. I reviewed your changes update and then merge your pull request. Please make sure to follow the existing code style and guidelines.
 
 `Don't forget to give star this repository ⭐`
