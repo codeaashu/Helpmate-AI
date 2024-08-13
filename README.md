@@ -18,7 +18,7 @@
 </div>
 
 ```
-  🤖 Conversational AI Interface
+  🤖 Conversational AI Interfaces
   📝 Text Summarization
   🧩 Question Answering
   📲 Responsive Layout
