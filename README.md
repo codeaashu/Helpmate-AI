@@ -8,7 +8,7 @@
 <hr>
   <h1 align="center">🤖 Introducing to Helpmate AI 🤖</h1>
   <img src="./public/Helpmate-AI.png" width="100px" />
-  <br><a href="https://helpmate-ai.vercel.app/"><strong>HELPMATE - AI</strong></a>
+  <br><a href="https://helpmate-ai.vercel.app/"><strong>HELPMATE   AI</strong></a>
   <h4 align="center">✦ Let's take help with your AI mate! ✦</h4>
   
   ` Helpmate is a AI ChatBot web app where you can ask any question and you will get the answer. `
