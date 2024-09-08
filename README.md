@@ -10,7 +10,7 @@
   <img src="./public/Helpmate-AI.png" width="100px" />
   <br><a href="https://helpmate-ai.vercel.app/"><strong>HELPMATE   AI</strong></a>
   <h4 align="center">✦ Let's take help with your AI mate! ✦</h4>
-  <a href="https://ai.google.dev/competition/projects/helpmate-ai"><strong>Click here ti vote our APP</strong></a></br>-
+  <a href="https://ai.google.dev/competition/projects/helpmate-ai"><strong>Click here to vote our APP</strong></a></br>-
   
   
   ` Helpmate is a AI ChatBot web app where you can ask any question and you will get the answer. `
