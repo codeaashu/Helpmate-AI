@@ -1,6 +1,4 @@
-                 s
- v            
-   sd dd  f     c   <div align="center">                                                                                            
+<div align="center">                                                                                            
    
   
   ![GitHub repo size](https://img.shields.io/github/repo-size/codeaashu/Helpmate-AI)
