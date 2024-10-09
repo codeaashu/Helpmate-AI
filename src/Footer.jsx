@@ -18,10 +18,10 @@ const Footer = () => {
           </a>
           <span className="text-gray-400">|</span>
           <a
-            href="/terms-of-service"
+            href="https://devdisplay.vercel.app/"
             className="text-blue-400 hover:underline transition duration-300 ease-in-out"
           >
-            Creator
+            Spotlight
           </a>
         </div>
 
