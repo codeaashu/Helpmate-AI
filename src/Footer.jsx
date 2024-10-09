@@ -6,28 +6,27 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <h3 className="text-2xl font-bold mb-4">Powered by HelpMate AI</h3>
         <p className="text-sm text-gray-400 mb-6">
-          HelpMate AI may generate incorrect information. Please verify before
-          relying on it.
+          Helpmate is an AI ChatBot web app where you can ask any question and you will get the answer.
         </p>
 
         <div className="flex justify-center space-x-4 mb-6">
           <a
-            href="/privacy-policy"
+            href="https://github.com/codeaashu/Helpmate-AI"
             className="text-blue-400 hover:underline transition duration-300 ease-in-out"
           >
-            Privacy Policy
+            GitHub
           </a>
           <span className="text-gray-400">|</span>
           <a
             href="/terms-of-service"
             className="text-blue-400 hover:underline transition duration-300 ease-in-out"
           >
-            Terms of Service
+            Creator
           </a>
         </div>
 
         <div className="mt-4 text-sm text-gray-500">
-          <p>&copy; 2024 CodeAashu. All rights reserved.</p>
+          <p>&copy; 2024 Helpmate AI. All rights reserved.</p>
         </div>
       </div>
     </footer>
