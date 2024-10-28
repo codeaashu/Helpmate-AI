@@ -3,6 +3,7 @@ import "./App.css";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import Footer from "./Footer";
+import ShareButtons from "./components/ShareButtons";
 
 function App() {
   const [question, setQuestion] = useState("");
@@ -135,7 +136,10 @@ function App() {
           {/* Conditional Rendering for ReactMarkdown */}
           {answer && (
             <div className="w-full md:w-2/3 lg:w-1/3 xl:w-1/3 text-center rounded-lg bg-gray-900 my-6 shadow-2xl transition-all duration-500 transform hover:scale-105">
-              <ReactMarkdown className="p-4">{answer}</ReactMarkdown>
+              <div className="p-4">
+                <ReactMarkdown>{answer}</ReactMarkdown>
+                <ShareButtons answer={answer} />
+              </div>
             </div>
           )}
           <Footer />
