@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom, #0d9488, #1e3a8a); /* Teal to dark navy gradient */
+  min-height: 100vh; /* Ensure it covers full height */
+}
+
+.bg-gray-800 {
+  background-color: rgba(31, 41, 55, 0.9); /* Dark background with slight transparency */
+}
+
+textarea {
+  border: none;
+  resize: none; /* Prevent resizing */
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #0d9488; /* Teal outline on focus */
+}
+
+/* Message bubbles */
+.bg-blue-600 {
+  background-color: #0d9488; /* User message background (teal) */
+}
+
+.bg-gray-700 {
+  background-color: #1e3a8a; /* Bot message background (dark navy) */
+}
+
+/* Additional styles for smoother UI */
+button {
+  transition: background-color 0.3s ease;
+  border: none;
+  border-radius: 0.375rem; /* Rounded corners for buttons */
+}
+
+button:hover {
+  background-color: rgba(13, 148, 136, 0.8); /* Hover effect for send button (lighter teal) */
+}
+
+.text-right {
+  text-align: right; /* Align user messages to the right */
+}
+
+.text-left {
+  text-align: left; /* Align bot messages to the left */
+}
+
+/* Footer styles */
+.footer {
+  background-color: rgba(31, 41, 55, 0.9); /* Matching footer background */
+  color: #ffffff; /* Footer text color */
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}

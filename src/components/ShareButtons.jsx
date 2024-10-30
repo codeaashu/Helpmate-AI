@@ -39,6 +39,11 @@ const ShareButtons = ({ answer }) => {
     }
   };
 
+  const handleSpeak = () => {
+    const speech = new SpeechSynthesisUtterance(answer);
+    window.speechSynthesis.speak(speech);
+  };
+
   return (
     <div className="flex gap-2 justify-end mt-2">
       <button
@@ -81,6 +86,27 @@ const ShareButtons = ({ answer }) => {
           />
         </svg>
         Share
+      </button>
+
+      <button
+        onClick={handleSpeak}
+        className="flex items-center gap-1 px-3 py-1 text-sm bg-gray-700 hover:bg-gray-600 rounded-md transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 1v10m0 0v10m0-10h4m-4 0h-4m4 0v-4m0 4v4"
+          />
+        </svg>
+        Speak
       </button>
     </div>
   );
