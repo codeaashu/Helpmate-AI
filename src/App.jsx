@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import "./App.css"; // Make sure to import the CSS with the new animations
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import Footer from "./Footer";
 import ShareButtons from "./components/ShareButtons";
+import { FaMicrophone, FaPaperPlane } from "react-icons/fa";
 
 function App() {
   const [question, setQuestion] = useState("");
@@ -49,9 +50,8 @@ function App() {
   };
 
   async function generateAnswer(e) {
-    setGeneratingAnswer(true);
     e.preventDefault();
-    setAnswer("Loading your answer... \n It might take up to 10 seconds");
+    setGeneratingAnswer(true);
     try {
       const response = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
@@ -63,89 +63,83 @@ function App() {
         },
       });
 
-      setAnswer(
-        response["data"]["candidates"][0]["content"]["parts"][0]["text"]
-      );
+      const fullAnswer = response.data.candidates[0].content.parts[0].text;
+      setAnswer(fullAnswer); // Store the full answer
     } catch (error) {
-      console.log(error);
-      setAnswer("Sorry, Something went wrong. Please try again!");
+      console.error(error);
+      setAnswer("Sorry, something went wrong. Please try again!");
+    } finally {
+      setGeneratingAnswer(false);
     }
-    setGeneratingAnswer(false);
   }
 
   return (
-    <>
-      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-black h-screen p-6 flex flex-col justify-center items-center text-white">
-        <div className=" flex flex-col items-center overflow-y-auto  w-full overflow-x-hidden">
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 p-6 text-white">
+        <div className="flex flex-col items-center w-full max-w-3xl">
+          <a
+            href="https://github.com/codeaashu/Helpmate-AI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-center mb-20"
+          >
+            <h1 className="text-5xl font-bold text-blue-400 mb-2">
+              Helpmate AI
+            </h1>
+            <p className="text-md text-gray-400">Your AI assistant at your fingertips</p>
+          </a>
           <form
             onSubmit={generateAnswer}
-            className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3 text-center rounded-lg shadow-2xl bg-gray-900 py-8 px-6 transition-all duration-500 transform hover:scale-105"
+            className="w-full text-center bg-gray-900 p-6 rounded-lg shadow-lg"
           >
-            <a
-              href="https://github.com/codeaashu/Helpmate-AI"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h1 className="text-4xl font-bold text-blue-400 mb-4 animate-bounce">
-                Helpmate AI
-              </h1>
-            </a>
-            <div className="relative w-full">
+            <p className="text-left mb-4 text-xl font-semibold text-blue-400">How can I help you?</p>
+            <div className="relative w-full mb-6">
               <textarea
                 required
-                className="border border-gray-700 bg-gray-800 text-white rounded-lg w-full my-3 min-h-fit p-4 transition-all duration-300 focus:border-blue-500 focus:shadow-lg focus:bg-gray-700"
+                className="border border-gray-700 bg-gray-800 text-white rounded-lg w-full p-4 h-32 resize-none focus:border-blue-500 focus:shadow-lg focus:bg-transparent outline-none"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Take help with your AI mate!"
-              ></textarea>
+                placeholder="Ask your AI mate..."
+              />
               {recognition && (
-                <button
-                  type="button"
-                  onClick={toggleListening}
-                  className={`absolute right-3 top-1/2 transform -translate-y-1/2 p-2 rounded-full ${
-                    isListening ? "bg-red-500" : "bg-blue-500"
-                  } hover:opacity-80 transition-all duration-300`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                    />
-                  </svg>
-                </button>
+               <button
+               type="button"
+               onClick={() => {
+                 toggleListening();
+                 setIsListening(!isListening); // Toggle listening state
+               }}
+               className={`absolute right-4 -top-11 p-2 rounded-full transition-transform duration-300 ease-in-out ${
+                 isListening ? "bg-red-500 scale-105 flicker" : "bg-blue-500 scale-100"
+               } hover:opacity-80 active:scale-95`}
+             >
+               <FaMicrophone className="text-white" />
+             </button>
               )}
+              <button
+                type="submit"
+                className={`absolute right-4 top-2 p-2 rounded-full bg-blue-600 hover:bg-blue-700 overflow-hidden`}
+                disabled={generatingAnswer}
+              >
+                <FaPaperPlane className={`text-white ${generatingAnswer ? 'send-animation' : ''}`} />
+              </button>
             </div>
-            <button
-              type="submit"
-              className={`bg-blue-600 text-white py-3 px-6 rounded-md shadow-md hover:bg-blue-700 transition-all duration-300 ${
-                generatingAnswer ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              disabled={generatingAnswer}
-            >
-              Generate answer
-            </button>
           </form>
-          {/* Conditional Rendering for ReactMarkdown */}
-          {answer && (
-            <div className="w-full md:w-2/3 lg:w-1/3 xl:w-1/3 text-center rounded-lg bg-gray-900 my-6 shadow-2xl transition-all duration-500 transform hover:scale-105">
-              <div className="p-4">
-                <ReactMarkdown>{answer}</ReactMarkdown>
-                <ShareButtons answer={answer} />
-              </div>
+          {generatingAnswer ? (
+            <div className="w-full text-center bg-gray-900 p-6 mt-6 rounded-lg shadow-lg animate-pulse">
+              <div className="h-4 bg-gray-700 rounded w-3/4 mx-auto mb-2"></div>
+              <div className="h-4 bg-gray-700 rounded w-2/3 mx-auto mb-2"></div>
+              <div className="h-4 bg-gray-700 rounded w-1/2 mx-auto"></div>
+            </div>
+          ) : answer && (
+            <div className="w-full text-left bg-gray-900 p-6 mt-6 rounded-lg shadow-lg answer-container">
+              <ReactMarkdown>{answer}</ReactMarkdown>
+              <ShareButtons answer={answer} />
             </div>
           )}
-          <Footer />
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }
 

@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* App.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #111827; /* Dark theme background */
+    color: #ffffff;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  footer {
+    margin-top: auto;
+  }
+  
+
+  @keyframes send-animation {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(20px, -20px); /* Adjust values to your needs */
+      opacity: 0;
+    }
+    50%{
+        transform: translate(-20px, 20px);
+        opacity: 0;
+    }
+    100% {
+      transform: translate(0, 0); /* Returns from bottom left */
+      opacity: 1;
+    }
+  }
+  
+  .send-animation {
+    animation: send-animation 1.5s ease forwards;
+  }
+  
+  @keyframes flicker {
+    0%,  100% {
+      opacity: 1; /* Fully visible */
+    }
+    50% {
+      opacity: 0.5; /* Invisible */
+    }
+  }
+  
+  .flicker {
+    animation: flicker 2s infinite; /* Adjust duration and repetition as needed */
+  }
+  
