@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
@@ -57,3 +58,70 @@ button:hover {
   bottom: 0;
   width: 100%;
 }
+=======
+/* General Dark Mode with Subtle Colors */
+body {
+    background-color: #1c1f2b;  /* Deep dark blue */
+    color: #e4e6eb; /* Light gray for contrast */
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  h1, h2 {
+    font-weight: 600;
+    color: #56ccf2; /* Accent color */
+    margin: 0;
+  }
+  
+  /* Textarea and Input Styling */
+  textarea, .button-primary, .button-secondary {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+  
+  /* Button Styling */
+  .button-primary {
+    background-color: #56ccf2; /* Accent color */
+    color: #1c1f2b;
+    padding: 12px 24px;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .button-primary:hover {
+    background-color: #3ba7d8;
+    transform: scale(1.05);
+  }
+  
+  .button-secondary {
+    background-color: #2f3542;
+    color: #e4e6eb;
+    padding: 8px 20px;
+    font-weight: 500;
+    border: none;
+  }
+  
+  .button-secondary:hover {
+    background-color: #3e4452;
+    transform: scale(1.05);
+  }
+  
+  /* Improved Layout Spacing for Text and Content */
+  .container {
+    max-width: 800px;
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      padding: 1rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
+>>>>>>> 6b114be1dd4f361a41f29760361e1d7a558214dd
