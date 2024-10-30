@@ -88,7 +88,6 @@ function App() {
   }, [messages]);
 
   return (
-<<<<<<< HEAD
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-6">
       <div className="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg flex flex-col">
         <h1 className="text-3xl font-bold text-center text-blue-400 mb-4">Helpmate AI</h1>
@@ -97,19 +96,6 @@ function App() {
             <div
               key={index}
               className={`mb-2 ${msg.type === "user" ? "text-right" : "text-left"}`}
-=======
-    <>
-      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-black h-screen p-6 flex flex-col justify-center items-center text-white">
-        <div className="flex flex-col items-center overflow-y-auto w-full overflow-x-hidden">
-          <form
-            onSubmit={generateAnswer}
-            className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3 text-center rounded-lg shadow-2xl bg-gray-900 py-8 px-6 transition-all duration-500 transform hover:scale-105"
-          >
-            <a
-              href="https://github.com/codeaashu/Helpmate-AI"
-              target="_blank"
-              rel="noopener noreferrer"
->>>>>>> 6b114be1dd4f361a41f29760361e1d7a558214dd
             >
               <div
                 className={`inline-block p-3 rounded-lg ${

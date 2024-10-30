@@ -1,13 +1,14 @@
-<<<<<<< HEAD
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(to bottom, #0d9488, #1e3a8a); /* Teal to dark navy gradient */
-  min-height: 100vh; /* Ensure it covers full height */
+  font-family: Arial, sans-serif;
+}
+
+.bg-gray-900 {
+  background-color: #1e1e1e; /* Dark background */
 }
 
 .bg-gray-800 {
-  background-color: rgba(31, 41, 55, 0.9); /* Dark background with slight transparency */
+  background-color: #292929; /* Chat area background */
 }
 
 textarea {
@@ -17,27 +18,25 @@ textarea {
 
 textarea:focus {
   outline: none;
-  border-color: #0d9488; /* Teal outline on focus */
+  border-color: #3b82f6; /* Blue outline on focus */
 }
 
 /* Message bubbles */
 .bg-blue-600 {
-  background-color: #0d9488; /* User message background (teal) */
+  background-color: #3b82f6; /* User message background */
 }
 
 .bg-gray-700 {
-  background-color: #1e3a8a; /* Bot message background (dark navy) */
+  background-color: #434343; /* Bot message background */
 }
 
 /* Additional styles for smoother UI */
 button {
   transition: background-color 0.3s ease;
-  border: none;
-  border-radius: 0.375rem; /* Rounded corners for buttons */
 }
 
 button:hover {
-  background-color: rgba(13, 148, 136, 0.8); /* Hover effect for send button (lighter teal) */
+  background-color: rgba(59, 130, 246, 0.8); /* Hover effect for send button */
 }
 
 .text-right {
@@ -47,81 +46,3 @@ button:hover {
 .text-left {
   text-align: left; /* Align bot messages to the left */
 }
-
-/* Footer styles */
-.footer {
-  background-color: rgba(31, 41, 55, 0.9); /* Matching footer background */
-  color: #ffffff; /* Footer text color */
-  padding: 1rem;
-  text-align: center;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
-=======
-/* General Dark Mode with Subtle Colors */
-body {
-    background-color: #1c1f2b;  /* Deep dark blue */
-    color: #e4e6eb; /* Light gray for contrast */
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  h1, h2 {
-    font-weight: 600;
-    color: #56ccf2; /* Accent color */
-    margin: 0;
-  }
-  
-  /* Textarea and Input Styling */
-  textarea, .button-primary, .button-secondary {
-    transition: all 0.3s ease;
-    border-radius: 8px;
-  }
-  
-  /* Button Styling */
-  .button-primary {
-    background-color: #56ccf2; /* Accent color */
-    color: #1c1f2b;
-    padding: 12px 24px;
-    font-weight: bold;
-    border: none;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s, transform 0.2s;
-  }
-  
-  .button-primary:hover {
-    background-color: #3ba7d8;
-    transform: scale(1.05);
-  }
-  
-  .button-secondary {
-    background-color: #2f3542;
-    color: #e4e6eb;
-    padding: 8px 20px;
-    font-weight: 500;
-    border: none;
-  }
-  
-  .button-secondary:hover {
-    background-color: #3e4452;
-    transform: scale(1.05);
-  }
-  
-  /* Improved Layout Spacing for Text and Content */
-  .container {
-    max-width: 800px;
-    padding: 1.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    body {
-      padding: 1rem;
-    }
-    h1 {
-      font-size: 1.8rem;
-    }
-  }
-  
->>>>>>> 6b114be1dd4f361a41f29760361e1d7a558214dd
