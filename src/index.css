@@ -30,11 +30,11 @@ body, html {
       transform: translate(0, 0);
     }
     25% {
-      transform: translate(20px, -20px); /* Adjust values to your needs */
+      transform: translate(10px, -10px); /* Adjust values to your needs */
       opacity: 0;
     }
     50%{
-        transform: translate(-20px, 20px);
+        transform: translate(-10px, 10px);
         opacity: 0;
     }
     100% {
@@ -59,4 +59,42 @@ body, html {
   .flicker {
     animation: flicker 2s infinite; /* Adjust duration and repetition as needed */
   }
-  
+
+/* Chat container scroll styling */
+/* .chat-container {
+  overflow-y: auto;
+  /* max-height: 60vh;
+  padding-right: 0.5rem;
+} */
+
+/* App.css */
+
+/* Style for chat-display to handle horizontal scrolling without word breaks */
+.chat-display {
+  max-height: 100%; /* Set a maximum height for vertical scrolling */
+  /* overflow-y: auto; Vertical scrolling for long content */
+  overflow-x: auto; /* Horizontal scrolling for wide content */
+  white-space: pre-wrap; /* Preserve whitespace formatting and avoid line breaks */
+  padding-right: 1rem; /* Add padding to avoid content sticking to the edge */
+}
+
+
+.flex-grow {
+  overflow-y: auto; /* Enables the outermost scroll */
+}
+
+/* Optional smooth scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; /* For horizontal scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4a5568;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2d3748;
+}
+
