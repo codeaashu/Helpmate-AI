@@ -1,33 +1,29 @@
+import { FaGithub, FaRocket } from "react-icons/fa";
+
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8 text-center shadow-md mt-8">
-      {" "}
-      {/* Added mt-8 for top margin */}
+    <footer className="bg-[#111827] text-white py-4 text-center shadow-lg w-full">
       <div className="container mx-auto px-4">
-        <h3 className="text-2xl font-bold mb-4">Powered by HelpMate AI</h3>
-        <p className="text-sm text-gray-400 mb-6">
-          Helpmate is an AI ChatBot web app where you can ask any question and you will get the answer.
+        <h3 className="text-xl font-semibold mb-2 tracking-wide">HelpMate AI</h3>
+        <p className="text-sm text-gray-300 mb-4">
+          Your AI companion for instant answers to any question.
         </p>
-
-        <div className="flex justify-center space-x-4 mb-6">
+        <div className="flex justify-center space-x-4 mb-3">
           <a
             href="https://github.com/codeaashu/Helpmate-AI"
-            className="text-blue-400 hover:underline transition duration-300 ease-in-out"
+            className="text-blue-400 hover:text-white transform hover:scale-110 transition duration-300 flex items-center"
           >
-            GitHub
+            <FaGithub className="mr-1" /> GitHub
           </a>
-          <span className="text-gray-400">|</span>
+          <span className="text-gray-500">|</span>
           <a
             href="https://devdisplay.vercel.app/"
-            className="text-blue-400 hover:underline transition duration-300 ease-in-out"
+            className="text-blue-400 hover:text-white transform hover:scale-110 transition duration-300 flex items-center"
           >
-            Spotlight
+            <FaRocket className="mr-1" /> Spotlight
           </a>
         </div>
-
-        <div className="mt-4 text-sm text-gray-500">
-          <p>&copy; 2024 Helpmate AI. All rights reserved.</p>
-        </div>
+        <p className="text-xs text-gray-500">&copy; 2024 HelpMate AI. All rights reserved.</p>
       </div>
     </footer>
   );
