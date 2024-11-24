@@ -5,7 +5,7 @@
   ![GitHub forks](https://img.shields.io/github/forks/codeaashu/Helpmate-AI?style=social)
 [![Twitter Follow](https://img.shields.io/twitter/follow/warrior_aashuu?style=social)](https://twitter.com/intent/follow?screen_name=warrior_aashuu)
 
-<hr>
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2300">
   <h1 align="center">🤖 Introducing to Helpmate AI 🤖</h1>
   <img src="./public/Helpmate-AI.png" width="100px" />
   <br><a href="https://helpmate-ai.vercel.app/"><strong>HELPMATE   AI</strong></a>
