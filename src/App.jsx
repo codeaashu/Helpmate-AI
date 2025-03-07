@@ -170,7 +170,7 @@ function App() {
               >
                 <ReactMarkdown>{chat.text}</ReactMarkdown>
                 {chat.type === "answer" && (
-                  <div className="flex justify-end mt-2 space-x-2">
+                  <div className="flex flex-wrap justify-end mt-2 space-x-2">
                     <button onClick={() => toggleSpeaking(chat.text)} className="flex items-center text-white mt-2 mr-2">
                       <FaVolumeUp className="mr-1"/>
                       Speak
