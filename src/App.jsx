@@ -67,7 +67,7 @@ function App() {
 
   async function generateAnswer(e) {
     e.preventDefault();
-    if (!question.trim()) return; // Prevent empty requests
+    if (!question.trim()) return;
 
     if (generatingAnswer) {
       console.log("Already generating an answer. Please wait...");
@@ -89,11 +89,10 @@ function App() {
     }
 
     const apiKey = import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT;
-    console.log("API Key:", apiKey); // Debugging log
 
     let attempts = 0;
     const maxAttempts = 3;
-    let delay = 2000; // Start with 2 seconds
+    let delay = 2000;
 
     while (attempts < maxAttempts) {
       try {
@@ -104,12 +103,10 @@ function App() {
           data: { contents: [{ parts: [{ text: question }] }] },
         });
 
-        console.log("API Response:", response.data); // Debugging log
-
         if (response.data?.candidates?.length > 0) {
           const fullAnswer = response.data.candidates[0].content.parts[0].text;
 
-          cache.set(question, fullAnswer); // Cache response
+          cache.set(question, fullAnswer);
 
           setChatHistory((prevChat) => [
             ...prevChat,
@@ -117,11 +114,11 @@ function App() {
             { type: "answer", text: fullAnswer },
           ]);
 
-          setQuestion(""); // Clear question input
+          setQuestion("");
         } else {
           throw new Error("Invalid API response structure");
         }
-        break; // Exit loop if request succeeds
+        break;
       } catch (error) {
         console.error("API Error:", error);
 
@@ -129,7 +126,7 @@ function App() {
           if (attempts < maxAttempts - 1) {
             console.warn(`Rate limit hit. Retrying in ${delay / 1000} seconds...`);
             await new Promise((resolve) => setTimeout(resolve, delay));
-            delay *= 2; // Exponential backoff
+            delay *= 2;
             attempts++;
           } else {
             setChatHistory((prevChat) => [
@@ -152,74 +149,70 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 text-white">
-      <h1 className="text-5xl font-bold text-blue-400 mt-10 mb-2 text-center">Helpmate AI</h1>
-      <p className="text-md text-gray-400 text-center mb-10">Your AI assistant at your fingertips</p>
-      <div className="flex-grow p-6 overflow-auto">
-        <div className="chat-box max-w-3xl mx-auto bg-gray-900 rounded-lg shadow-lg p-4 mt-10">
-          <p className="text-lg text-gray-400 text-left">How may I help you?</p>
-          <div className="chat-display space-y-4 mb-4">
-            {chatHistory.map((chat, index) => (
-              <div
-                key={index}
-                className={`p-4 rounded-lg ${
-                  chat.type === "question"
-                    ? "bg-blue-500 text-white self-end text-right w-fit max-w-[80%] ml-auto"
-                    : "bg-gray-700 text-white self-start text-left w-fit max-w-[80%] ml-4 overflow-x-scroll"
-                }`}
-              >
-                <ReactMarkdown>{chat.text}</ReactMarkdown>
-                {chat.type === "answer" && (
-                  <div className="flex flex-wrap justify-end mt-2 space-x-2">
-                    <button onClick={() => toggleSpeaking(chat.text)} className="flex items-center text-white mt-2 mr-2">
-                      <FaVolumeUp className="mr-1"/>
-                      Speak
-                    </button>
-                    <ShareButtons answer={chat.text} />
-                  </div>
-                )}
-              </div>
-            ))}
-            {generatingAnswer && (
-              <div className="p-4 rounded-lg bg-gray-700 animate-pulse">
-                <div className="h-4 bg-gray-600 rounded w-3/4 mb-2"></div>
-                <div className="h-4 bg-gray-600 rounded w-2/3 mb-2"></div>
-                <div className="h-4 bg-gray-600 rounded w-1/2"></div>
-              </div>
-            )}
-          </div>
-
-          <form onSubmit={generateAnswer} className="flex items-center w-full bg-gray-800 p-3 rounded-lg shadow-md">
-            <textarea
-              required
-              className="border border-gray-700 bg-gray-800 text-white rounded-lg w-full p-2 h-12 resize-none focus:border-blue-500 outline-none"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              placeholder="Ask your AI mate..."
-            />
-            <div className="flex items-center space-x-2 ml-4">
-              {recognition && (
-                <button
-                  type="button"
-                  onClick={toggleListening}
-                  className={`p-2 rounded-full transition-transform duration-300 ease-in-out ${
-                    isListening ? "bg-red-500 flicker" : "bg-blue-500"
-                  } hover:opacity-80`}
-                >
-                  <FaMicrophone className="text-white" />
-                </button>
+    <div className="flex flex-col min-h-screen bg-gray-950 text-white">
+      <nav className="p-4 bg-gray-800">
+        <h1 className="text-2xl font-bold">Helpmate AI</h1>
+      </nav>
+      <div className="flex-grow p-4">
+        <div className="chat-display space-y-4">
+          {chatHistory.map((chat, index) => (
+            <div
+              key={index}
+              className={`p-3 rounded-lg ${
+                chat.type === "question"
+                  ? "bg-blue-600 text-white self-end text-right w-fit max-w-[90%] ml-auto"
+                  : "bg-gray-800 text-white self-start text-left w-fit max-w-[90%]"
+              }`}
+            >
+              <ReactMarkdown className="markdown-body">{chat.text}</ReactMarkdown>
+              {chat.type === "answer" && (
+                <div className="flex flex-wrap justify-end mt-2 space-x-2">
+                  <button onClick={() => toggleSpeaking(chat.text)} className="flex items-center text-gray-300 mt-2 mr-2">
+                    <FaVolumeUp className="mr-1" />
+                  </button>
+                  <ShareButtons answer={chat.text} />
+                </div>
               )}
-              <button
-                type="submit"
-                className="p-2 rounded-full bg-blue-600 hover:bg-blue-700"
-                disabled={generatingAnswer}
-              >
-                <FaPaperPlane className={`text-white ${generatingAnswer ? "send-animation" : ""}`} />
-              </button>
             </div>
-          </form>
+          ))}
+          {generatingAnswer && (
+            <div className="p-3 rounded-lg bg-gray-800 animate-pulse">
+              <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-700 rounded w-2/3 mb-2"></div>
+              <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+            </div>
+          )}
         </div>
       </div>
+      <form onSubmit={generateAnswer} className="flex items-center w-full bg-gray-900 p-3">
+        <textarea
+          required
+          className="border border-gray-800 bg-gray-800 text-white rounded-lg w-full p-2 h-12 resize-none focus:border-blue-500 outline-none"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Ask your AI mate..."
+        />
+        <div className="flex items-center space-x-2 ml-4">
+          {recognition && (
+            <button
+              type="button"
+              onClick={toggleListening}
+              className={`p-2 rounded-full transition-transform duration-300 ease-in-out ${
+                isListening ? "bg-red-500" : "bg-blue-500"
+              } hover:opacity-80`}
+            >
+              <FaMicrophone className="text-white" />
+            </button>
+          )}
+          <button
+            type="submit"
+            className="p-2 rounded-full bg-blue-600 hover:bg-blue-700"
+            disabled={generatingAnswer}
+          >
+            <FaPaperPlane className={`text-white ${generatingAnswer ? "send-animation" : ""}`} />
+          </button>
+        </div>
+      </form>
       <Footer />
     </div>
   );
