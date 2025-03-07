@@ -98,10 +98,17 @@ function App() {
       }
     } catch (error) {
       console.error("API Error:", error);
-      setChatHistory((prevChat) => [
-        ...prevChat,
-        { type: "answer", text: "Sorry, something went wrong. Please try again!" },
-      ]);
+      if (error.response && error.response.status === 429) {
+        setChatHistory((prevChat) => [
+          ...prevChat,
+          { type: "answer", text: "Rate limit exceeded. Please try again later." },
+        ]);
+      } else {
+        setChatHistory((prevChat) => [
+          ...prevChat,
+          { type: "answer", text: "Sorry, something went wrong. Please try again!" },
+        ]);
+      }
     } finally {
       setGeneratingAnswer(false);
     }
