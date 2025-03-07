@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import ShareButtons from "./components/ShareButtons";
 import { FaMicrophone, FaPaperPlane, FaVolumeUp } from "react-icons/fa";
 
+const cache = new Map();
+
 function App() {
   const [question, setQuestion] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
@@ -65,53 +67,88 @@ function App() {
 
   async function generateAnswer(e) {
     e.preventDefault();
-    setGeneratingAnswer(true);
-    try {
-      const apiKey = import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT;
-      console.log("API Key:", apiKey); // Log the API key for debugging
+    if (!question.trim()) return; // Prevent empty requests
 
-      const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-        method: "post",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          contents: [{ parts: [{ text: question }] }],
-        },
-      });
-
-      console.log("API Response:", response.data); // Debugging log
-
-      if (response.data && response.data.candidates && response.data.candidates.length > 0) {
-        const fullAnswer = response.data.candidates[0].content.parts[0].text;
-
-        setChatHistory((prevChat) => [
-          ...prevChat,
-          { type: "question", text: question },
-          { type: "answer", text: fullAnswer },
-        ]);
-
-        setQuestion(""); // Clear question input after submitting
-      } else {
-        throw new Error("Invalid API response structure");
-      }
-    } catch (error) {
-      console.error("API Error:", error);
-      if (error.response && error.response.status === 429) {
-        setChatHistory((prevChat) => [
-          ...prevChat,
-          { type: "answer", text: "Rate limit exceeded. Please try again later." },
-        ]);
-      } else {
-        setChatHistory((prevChat) => [
-          ...prevChat,
-          { type: "answer", text: "Sorry, something went wrong. Please try again!" },
-        ]);
-      }
-    } finally {
-      setGeneratingAnswer(false);
+    if (generatingAnswer) {
+      console.log("Already generating an answer. Please wait...");
+      return;
     }
+
+    setGeneratingAnswer(true);
+
+    if (cache.has(question)) {
+      console.log("Fetching from cache...");
+      setChatHistory((prevChat) => [
+        ...prevChat,
+        { type: "question", text: question },
+        { type: "answer", text: cache.get(question) },
+      ]);
+      setQuestion("");
+      setGeneratingAnswer(false);
+      return;
+    }
+
+    const apiKey = import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT;
+    console.log("API Key:", apiKey); // Debugging log
+
+    let attempts = 0;
+    const maxAttempts = 3;
+    let delay = 2000; // Start with 2 seconds
+
+    while (attempts < maxAttempts) {
+      try {
+        const response = await axios({
+          url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+          method: "post",
+          headers: { 'Content-Type': 'application/json' },
+          data: { contents: [{ parts: [{ text: question }] }] },
+        });
+
+        console.log("API Response:", response.data); // Debugging log
+
+        if (response.data?.candidates?.length > 0) {
+          const fullAnswer = response.data.candidates[0].content.parts[0].text;
+
+          cache.set(question, fullAnswer); // Cache response
+
+          setChatHistory((prevChat) => [
+            ...prevChat,
+            { type: "question", text: question },
+            { type: "answer", text: fullAnswer },
+          ]);
+
+          setQuestion(""); // Clear question input
+        } else {
+          throw new Error("Invalid API response structure");
+        }
+        break; // Exit loop if request succeeds
+      } catch (error) {
+        console.error("API Error:", error);
+
+        if (error.response?.status === 429) {
+          if (attempts < maxAttempts - 1) {
+            console.warn(`Rate limit hit. Retrying in ${delay / 1000} seconds...`);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            delay *= 2; // Exponential backoff
+            attempts++;
+          } else {
+            setChatHistory((prevChat) => [
+              ...prevChat,
+              { type: "answer", text: "Rate limit exceeded. Please try again later." },
+            ]);
+            break;
+          }
+        } else {
+          setChatHistory((prevChat) => [
+            ...prevChat,
+            { type: "answer", text: "Sorry, something went wrong. Please try again!" },
+          ]);
+          break;
+        }
+      }
+    }
+
+    setGeneratingAnswer(false);
   }
 
   return (
