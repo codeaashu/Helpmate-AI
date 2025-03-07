@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     if ("webkitSpeechRecognition" in window) {
-      const recognition = new webkitSpeechRecognition();
+      const recognition = new window.webkitSpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
       recognition.lang = "en-US";
@@ -67,27 +67,37 @@ function App() {
     e.preventDefault();
     setGeneratingAnswer(true);
     try {
+      const apiKey = import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT;
+      console.log("API Key:", apiKey); // Log the API key for debugging
+
       const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
-          import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT
-        }`,
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
         method: "post",
+        headers: {
+          'Content-Type': 'application/json'
+        },
         data: {
           contents: [{ parts: [{ text: question }] }],
         },
       });
 
-      const fullAnswer = response.data.candidates[0].content.parts[0].text;
+      console.log("API Response:", response.data); // Debugging log
 
-      setChatHistory((prevChat) => [
-        ...prevChat,
-        { type: "question", text: question },
-        { type: "answer", text: fullAnswer },
-      ]);
+      if (response.data && response.data.candidates && response.data.candidates.length > 0) {
+        const fullAnswer = response.data.candidates[0].content.parts[0].text;
 
-      setQuestion(""); // Clear question input after submitting
+        setChatHistory((prevChat) => [
+          ...prevChat,
+          { type: "question", text: question },
+          { type: "answer", text: fullAnswer },
+        ]);
+
+        setQuestion(""); // Clear question input after submitting
+      } else {
+        throw new Error("Invalid API response structure");
+      }
     } catch (error) {
-      console.error(error);
+      console.error("API Error:", error);
       setChatHistory((prevChat) => [
         ...prevChat,
         { type: "answer", text: "Sorry, something went wrong. Please try again!" },

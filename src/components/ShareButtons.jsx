@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
 const ShareButtons = ({ answer }) => {
   const [copySuccess, setCopySuccess] = useState(false);
@@ -84,6 +85,9 @@ const ShareButtons = ({ answer }) => {
       </button>
     </div>
   );
+};
+ShareButtons.propTypes = {
+  answer: PropTypes.string.isRequired,
 };
 
 export default ShareButtons;
