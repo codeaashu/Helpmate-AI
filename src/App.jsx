@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./App.css"; // Updated App.css with new styling below
+import "./App.css";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import Footer from "./Footer";
@@ -116,11 +116,11 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 text-white">
-        <h1 className="text-5xl font-bold text-blue-400 mt-10 mb-2 text-center">Helpmate AI</h1>
-        <p className="text-md text-gray-400 text-center mb-10">Your AI assistant at your fingertips</p>
-      <div className="flex-grow p-6 overflow-auto"> {/* Enable scrolling for the outermost container */}
+      <h1 className="text-5xl font-bold text-blue-400 mt-10 mb-2 text-center">Helpmate AI</h1>
+      <p className="text-md text-gray-400 text-center mb-10">Your AI assistant at your fingertips</p>
+      <div className="flex-grow p-6 overflow-auto">
         <div className="chat-box max-w-3xl mx-auto bg-gray-900 rounded-lg shadow-lg p-4 mt-10">
-        <p className="text-lg text-gray-400 text-left ">How may I help you ?</p>
+          <p className="text-lg text-gray-400 text-left">How may I help you?</p>
           <div className="chat-display space-y-4 mb-4">
             {chatHistory.map((chat, index) => (
               <div
@@ -152,7 +152,6 @@ function App() {
             )}
           </div>
 
-          {/* Input Area */}
           <form onSubmit={generateAnswer} className="flex items-center w-full bg-gray-800 p-3 rounded-lg shadow-md">
             <textarea
               required

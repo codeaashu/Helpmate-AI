@@ -86,6 +86,7 @@ const ShareButtons = ({ answer }) => {
     </div>
   );
 };
+
 ShareButtons.propTypes = {
   answer: PropTypes.string.isRequired,
 };
