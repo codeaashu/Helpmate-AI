@@ -150,8 +150,8 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-950 text-white">
-      <nav className="p-4 bg-gray-800">
-        <h1 className="text-2xl font-bold">Helpmate AI</h1>
+      <nav className="p-4 bg-[#040E23]">
+        <h1 className="text-2xl font-bold text-center">Helpmate AI</h1>
       </nav>
       <div className="flex-grow p-4">
         <div className="chat-display space-y-4">
@@ -176,7 +176,7 @@ function App() {
             </div>
           ))}
           {generatingAnswer && (
-            <div className="p-3 rounded-lg bg-gray-800 animate-pulse">
+            <div className="p-3 rounded-lg bg-gray-900 animate-pulse">
               <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
               <div className="h-4 bg-gray-700 rounded w-2/3 mb-2"></div>
               <div className="h-4 bg-gray-700 rounded w-1/2"></div>
