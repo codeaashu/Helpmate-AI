@@ -190,7 +190,7 @@ function App() {
           className="border border-gray-800 bg-gray-800 text-white rounded-lg w-full p-2 h-12 resize-none focus:border-blue-500 outline-none"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask your AI mate..."
+          placeholder="Your AI mate is here to help!"
         />
         <div className="flex items-center space-x-2 ml-4">
           {recognition && (
