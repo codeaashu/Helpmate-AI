@@ -5,10 +5,12 @@ import ReactMarkdown from "react-markdown";
 import Footer from "./Footer";
 import ShareButtons from "./components/ShareButtons";
 import { FaMicrophone, FaPaperPlane, FaVolumeUp } from "react-icons/fa";
+import { LoadingScreen } from "./components/LoadingScreen";
 
 const cache = new Map();
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false)
   const [question, setQuestion] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
@@ -149,6 +151,9 @@ function App() {
   }
 
   return (
+    <>
+    {!isLoaded && <LoadingScreen onComplete={()=>setIsLoaded(true)} />}{""}
+    <div className={`min-w-max min-h-screen transition-opacity duration-700 ${isLoaded?"opacity-100":"opacity-0"} bg-black text-gray-100`}>
     <div className="flex flex-col min-h-screen bg-gray-950 text-white">
       <nav className="p-4 bg-[#040E23]">
         <h1 className="text-2xl font-bold text-center">Helpmate AI</h1>
@@ -215,6 +220,8 @@ function App() {
       </form>
       <Footer />
     </div>
+    </div>
+    </>
   );
 }
 
