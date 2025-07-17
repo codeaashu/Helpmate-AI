@@ -41,10 +41,10 @@ export const LoadingScreen = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 z-50 bg-black text-gray-100 flex flex-col justify-center items-center">
-      <div className="mb-2 text-4xl font-mono font-bold text-center">
+      <div className="mb-2 md:text-4xl text-2xl font-mono font-bold text-center">
         {line1}
       </div>
-      <div className="mb-4 text-4xl font-mono font-bold text-center">
+      <div className="mb-4 md:text-4xl text-2xl font-mono font-bold text-center">
         {line2} 
       </div>
       <div className="w-[200px] h-[2px] bg-gray-800 rounded relative overflow-hidden">

@@ -154,7 +154,8 @@ function App() {
     <>
     {!isLoaded && <LoadingScreen onComplete={()=>setIsLoaded(true)} />}{""}
     <div className={`min-w-max min-h-screen transition-opacity duration-700 ${isLoaded?"opacity-100":"opacity-0"} bg-black text-gray-100`}>
-    <div className="flex flex-col min-h-screen bg-gray-950 text-white">
+
+    <div className="flex flex-col w-screen h-screen bg-gray-950 text-white">
       <nav className="p-4 bg-[#040E23]">
         <h1 className="text-2xl font-bold text-center">Helpmate AI</h1>
       </nav>
@@ -189,10 +190,10 @@ function App() {
           )}
         </div>
       </div>
-      <form onSubmit={generateAnswer} className="flex items-center w-full bg-gray-900 p-3">
+      <form onSubmit={generateAnswer} className="rounded-full flex items-center w-full bg-gray-900 p-3">
         <textarea
           required
-          className="border border-gray-800 bg-gray-800 text-white rounded-lg w-full p-2 h-12 resize-none focus:border-blue-500 outline-none"
+          className="border border-gray-900 bg-gray-900 text-white rounded-lg w-full p-2 h-12 resize-none outline-none"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="Your AI mate is here to help!"
