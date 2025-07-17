@@ -154,7 +154,8 @@ function App() {
     <>
     {!isLoaded && <LoadingScreen onComplete={()=>setIsLoaded(true)} />}{""}
     <div className={`min-w-max min-h-screen transition-opacity duration-700 ${isLoaded?"opacity-100":"opacity-0"} bg-black text-gray-100`}>
-    <div className="flex flex-col min-h-screen bg-gray-950 text-white">
+
+    <div className="flex flex-col w-screen h-screen bg-gray-950 text-white">
       <nav className="p-4 bg-[#040E23]">
         <h1 className="text-2xl font-bold text-center">Helpmate AI</h1>
       </nav>
