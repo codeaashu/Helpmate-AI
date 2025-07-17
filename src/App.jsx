@@ -193,7 +193,7 @@ function App() {
       <form onSubmit={generateAnswer} className="rounded-full flex items-center w-full bg-gray-900 p-3">
         <textarea
           required
-          className="border border-gray-900 bg-gray-900 text-white rounded-lg w-full p-2 h-12 resize-none focus:border-blue-500 outline-none"
+          className="border border-gray-900 bg-gray-900 text-white rounded-lg w-full p-2 h-12 resize-none outline-none"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="Your AI mate is here to help!"
