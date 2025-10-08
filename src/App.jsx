@@ -118,7 +118,7 @@ function App() {
       return;
     }
 
-    const apiKey = "YOUR_API_KEY"; //  put your API key here
+    const apiKey = import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT;
     let attempts = 0;
     const maxAttempts = 3;
     let delay = 2000;
