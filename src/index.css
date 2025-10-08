@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* App.css */
+
 
 body, html {
     margin: 0;
@@ -10,7 +10,8 @@ body, html {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #111827; /* Dark theme background */
+    background-color: #111827;
+    overflow: hidden; 
     color: #ffffff;
   }
   
