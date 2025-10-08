@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Copy,
   Send,
@@ -26,6 +26,15 @@ function App() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const chatEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatHistory]);
 
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 500);
@@ -293,7 +302,7 @@ function App() {
           </div>
         ) : (
           /* Chat Area */
-          <div className="space-y-6">
+          <div className="chat-container space-y-6">
             {chatHistory.map((chat, index) => (
               <div
                 key={index}
@@ -383,6 +392,7 @@ function App() {
                 </div>
               </div>
             )}
+            <div ref={chatEndRef} />
           </div>
         )}
 
@@ -462,6 +472,11 @@ function App() {
         }
         .animate-fade-in {
           animation: fade-in 0.3s ease-out;
+        }
+        .chat-container {
+          max-height: calc(100vh - 220px);
+          overflow-y: auto;
+          scroll-behavior: smooth;
         }
       `}</style>
     </div>
