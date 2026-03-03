@@ -36,6 +36,25 @@ function App() {
     temperature: 0.7,
     systemInstructions: ""
   });
+  const [appliedProfile, setAppliedProfile] = useState({
+    firstName: "",
+    temperature: 0.7,
+    systemInstructions: ""
+  });
+
+  const normalizeTemperature = (value) => {
+    const numericValue = Number(value);
+    if (Number.isNaN(numericValue)) return 0.7;
+    return Math.min(1, Math.max(0, numericValue));
+  };
+
+  const buildCacheKey = (questionText, settings) =>
+    JSON.stringify({
+      question: questionText.trim(),
+      firstName: settings.firstName.trim(),
+      systemInstructions: settings.systemInstructions.trim(),
+      temperature: normalizeTemperature(settings.temperature),
+    });
 
   // Submit Profile info
   const handleProfileSubmit = async (e) => {
@@ -45,7 +64,15 @@ function App() {
       console.log("Sending to backend:", profileData);
       // const response = await fetch('/api/user/profile', { ... });
 
-      setUserName(profileData.firstName); // Update the navbar name
+      const savedFirstName = profileData.firstName.trim();
+      const savedProfile = {
+        firstName: savedFirstName,
+        temperature: normalizeTemperature(profileData.temperature),
+        systemInstructions: profileData.systemInstructions.trim(),
+      };
+
+      setUserName(savedFirstName || null); // Update the navbar name
+      setAppliedProfile(savedProfile); // Apply settings for Gemini requests
       setIsProfileOpen(false); // Close modal on success
       alert("Profile Updated!");
     } catch (error) {
@@ -146,10 +173,17 @@ function App() {
       { type: "question", text: userQuestion },
     ]);
 
-    if (cache.has(userQuestion)) {
+    const effectiveSettings = {
+      firstName: appliedProfile.firstName.trim(),
+      temperature: normalizeTemperature(appliedProfile.temperature),
+      systemInstructions: appliedProfile.systemInstructions.trim(),
+    };
+    const cacheKey = buildCacheKey(userQuestion, effectiveSettings);
+
+    if (cache.has(cacheKey)) {
       setChatHistory((prev) => [
         ...prev,
-        { type: "answer", text: cache.get(userQuestion) },
+        { type: "answer", text: cache.get(cacheKey) },
       ]);
       setGeneratingAnswer(false);
       return;
@@ -160,6 +194,29 @@ function App() {
     const maxAttempts = 3;
     let delay = 2000;
 
+    const systemInstructionParts = [];
+    if (effectiveSettings.firstName) {
+      systemInstructionParts.push(
+        `The user's name is ${effectiveSettings.firstName}. If asked for their name, answer with this name.`
+      );
+    }
+    if (effectiveSettings.systemInstructions) {
+      systemInstructionParts.push(effectiveSettings.systemInstructions);
+    }
+
+    const requestBody = {
+      contents: [{ parts: [{ text: userQuestion }] }],
+      generationConfig: {
+        temperature: effectiveSettings.temperature,
+      },
+    };
+
+    if (systemInstructionParts.length > 0) {
+      requestBody.systemInstruction = {
+        parts: [{ text: systemInstructionParts.join("\n\n") }],
+      };
+    }
+
     while (attempts < maxAttempts) {
       try {
         const response = await fetch(
@@ -167,9 +224,7 @@ function App() {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: userQuestion }] }],
-            }),
+            body: JSON.stringify(requestBody),
           }
         );
 
@@ -184,7 +239,7 @@ function App() {
 
         if (data?.candidates?.length > 0) {
           const fullAnswer = data.candidates[0].content.parts[0].text;
-          cache.set(userQuestion, fullAnswer);
+          cache.set(cacheKey, fullAnswer);
           setChatHistory((prev) => [
             ...prev,
             { type: "answer", text: fullAnswer },
