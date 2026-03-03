@@ -10,6 +10,7 @@ import {
   Check,
   Mic,
   MicOff,
+  UserCircle, // Added UserCircle icon for the profile button
 } from "lucide-react";
 
 const cache = new Map();
@@ -27,6 +28,9 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [copiedIndex, setCopiedIndex] = useState(null);
   const chatEndRef = useRef(null);
+
+  // Placeholder state for teammate to integrate backend logic later
+  const [userName, setUserName] = useState(null);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -65,7 +69,7 @@ function App() {
 
   const toggleListening = () => {
     if (!recognition) return;
-    
+
     if (isListening) {
       recognition.stop();
       setIsListening(false);
@@ -208,25 +212,22 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen ${bgGradient} ${textColor} transition-all duration-700 ${
-        isLoaded ? "opacity-100" : "opacity-0"
-      }`}
+      className={`min-h-screen ${bgGradient} ${textColor} transition-all duration-700 ${isLoaded ? "opacity-100" : "opacity-0"
+        }`}
     >
       {/* Navbar */}
       <nav
-        className={`${navBg} backdrop-blur-md border-b ${
-          darkMode ? "border-slate-700" : "border-slate-200"
-        } sticky top-0 z-50`}
+        className={`${navBg} backdrop-blur-md border-b ${darkMode ? "border-slate-700" : "border-slate-200"
+          } sticky top-0 z-50`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
               <div
-                className={`w-10 h-10 rounded-xl bg-gradient-to-br ${
-                  darkMode
-                    ? "from-blue-500 to-purple-600"
-                    : "from-blue-400 to-indigo-500"
-                } flex items-center justify-center shadow-lg`}
+                className={`w-10 h-10 rounded-xl bg-gradient-to-br ${darkMode
+                  ? "from-blue-500 to-purple-600"
+                  : "from-blue-400 to-indigo-500"
+                  } flex items-center justify-center shadow-lg`}
               >
                 <span className="text-white font-bold text-lg">H</span>
               </div>
@@ -239,20 +240,34 @@ function App() {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2.5 rounded-lg ${
-                darkMode
+
+            {/* Added container for right-side navbar items */}
+            <div className="flex items-center gap-4">
+              {/* Profile Button Placeholder for teammate integration */}
+              <button
+                className={`flex items-center gap-2 p-2 rounded-lg transition-all duration-300 ${darkMode ? "hover:bg-slate-700 text-slate-300" : "hover:bg-slate-200 text-slate-700"
+                  }`}
+                title="Profile"
+              >
+                <UserCircle className="w-6 h-6" />
+                {/* Name will appear here once teammate sets the userName state */}
+                {userName && <span className="text-sm font-medium">{userName}</span>}
+              </button>
+
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2.5 rounded-lg ${darkMode
                   ? "bg-slate-700 hover:bg-slate-600"
                   : "bg-slate-200 hover:bg-slate-300"
-              } transition-all duration-300`}
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
+                  } transition-all duration-300`}
+              >
+                {darkMode ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -262,17 +277,17 @@ function App() {
         {chatHistory.length === 0 ? (
           <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
             <div
-              className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${
-                darkMode
-                  ? "from-blue-500 to-purple-600"
-                  : "from-blue-400 to-indigo-500"
-              } flex items-center justify-center shadow-2xl animate-pulse`}
+              className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${darkMode
+                ? "from-blue-500 to-purple-600"
+                : "from-blue-400 to-indigo-500"
+                } flex items-center justify-center shadow-2xl animate-pulse`}
             >
               <span className="text-white font-bold text-4xl">H</span>
             </div>
             <div className="text-center">
+              {/* Dynamic Greeting */}
               <h2 className="text-3xl font-bold">
-                Hello! How can I help you today?
+                {userName ? `Hello, ${userName}!` : "Hello!"} How can I help you today?
               </h2>
               <p className={`${mutedText} text-lg`}>
                 Ask me anything, I am here to assist
@@ -289,11 +304,10 @@ function App() {
                 <button
                   key={i}
                   onClick={() => setQuestion(prompt)}
-                  className={`p-4 rounded-xl ${chatBg} backdrop-blur-sm border shadow-md ${
-                    darkMode
-                      ? "border-slate-700 hover:border-blue-500"
-                      : "border-slate-200 hover:border-blue-400"
-                  } transition-all duration-300 text-center hover:scale-105`}
+                  className={`p-4 rounded-xl ${chatBg} backdrop-blur-sm border shadow-md ${darkMode
+                    ? "border-slate-700 hover:border-blue-500"
+                    : "border-slate-200 hover:border-blue-400"
+                    } transition-all duration-300 text-center hover:scale-105`}
                 >
                   <p className="font-medium">{prompt}</p>
                 </button>
@@ -306,18 +320,15 @@ function App() {
             {chatHistory.map((chat, index) => (
               <div
                 key={index}
-                className={`flex ${
-                  chat.type === "question" ? "justify-end" : "justify-start"
-                } animate-fade-in`}
+                className={`flex ${chat.type === "question" ? "justify-end" : "justify-start"
+                  } animate-fade-in`}
               >
                 <div
-                  className={`max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-lg ${
-                    chat.type === "question"
-                      ? `${userBubble} text-white`
-                      : `${aiBubble} ${
-                          darkMode ? "text-slate-100" : "text-slate-800"
-                        }`
-                  }`}
+                  className={`max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-lg ${chat.type === "question"
+                    ? `${userBubble} text-white`
+                    : `${aiBubble} ${darkMode ? "text-slate-100" : "text-slate-800"
+                    }`
+                    }`}
                 >
                   <div className="whitespace-pre-wrap break-words">
                     {chat.text}
@@ -326,9 +337,8 @@ function App() {
                     <div className="flex items-center gap-2 mt-3 pt-3 border-t border-slate-500/30">
                       <button
                         onClick={() => toggleSpeaking(chat.text)}
-                        className={`p-2 rounded-lg transition-all ${
-                          darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
-                        }`}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
+                          }`}
                         title={isSpeaking ? "Stop" : "Read aloud"}
                       >
                         {isSpeaking ? (
@@ -339,9 +349,8 @@ function App() {
                       </button>
                       <button
                         onClick={() => copyToClipboard(chat.text, index)}
-                        className={`p-2 rounded-lg transition-all ${
-                          darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
-                        }`}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
+                          }`}
                         title="Copy"
                       >
                         {copiedIndex === index ? (
@@ -352,9 +361,8 @@ function App() {
                       </button>
                       <button
                         onClick={() => shareContent(chat.text)}
-                        className={`p-2 rounded-lg transition-all ${
-                          darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
-                        }`}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
+                          }`}
                         title="Share"
                       >
                         <Share2 className="w-4 h-4" />
@@ -371,21 +379,18 @@ function App() {
                 >
                   <div className="flex space-x-2">
                     <div
-                      className={`w-2 h-2 rounded-full ${
-                        darkMode ? "bg-blue-400" : "bg-blue-500"
-                      } animate-bounce`}
+                      className={`w-2 h-2 rounded-full ${darkMode ? "bg-blue-400" : "bg-blue-500"
+                        } animate-bounce`}
                       style={{ animationDelay: "0ms" }}
                     ></div>
                     <div
-                      className={`w-2 h-2 rounded-full ${
-                        darkMode ? "bg-blue-400" : "bg-blue-500"
-                      } animate-bounce`}
+                      className={`w-2 h-2 rounded-full ${darkMode ? "bg-blue-400" : "bg-blue-500"
+                        } animate-bounce`}
                       style={{ animationDelay: "150ms" }}
                     ></div>
                     <div
-                      className={`w-2 h-2 rounded-full ${
-                        darkMode ? "bg-blue-400" : "bg-blue-500"
-                      } animate-bounce`}
+                      className={`w-2 h-2 rounded-full ${darkMode ? "bg-blue-400" : "bg-blue-500"
+                        } animate-bounce`}
                       style={{ animationDelay: "300ms" }}
                     ></div>
                   </div>
@@ -400,11 +405,10 @@ function App() {
         <div className="fixed bottom-20 left-0 right-0 px-4">
           <div className="max-w-4xl mx-auto">
             <div
-              className={`flex items-center gap-3 px-4 py-2 rounded-2xl shadow-lg border transition-all duration-300 ${
-                darkMode
-                  ? "bg-slate-800/90 border-slate-700"
-                  : "bg-white/90 border-slate-200"
-              }`}
+              className={`flex items-center gap-3 px-4 py-2 rounded-2xl shadow-lg border transition-all duration-300 ${darkMode
+                ? "bg-slate-800/90 border-slate-700"
+                : "bg-white/90 border-slate-200"
+                }`}
             >
               <textarea
                 value={question}
@@ -422,11 +426,10 @@ function App() {
               {recognition && (
                 <button
                   onClick={toggleListening}
-                  className={`p-3 rounded-xl transition-all duration-300 shadow-md ${
-                    isListening
-                      ? "bg-red-500 hover:bg-red-600"
-                      : "bg-slate-600 hover:bg-slate-500"
-                  }`}
+                  className={`p-3 rounded-xl transition-all duration-300 shadow-md ${isListening
+                    ? "bg-red-500 hover:bg-red-600"
+                    : "bg-slate-600 hover:bg-slate-500"
+                    }`}
                   title={isListening ? "Stop listening" : "Start voice input"}
                 >
                   {isListening ? (
