@@ -1,4 +1,5 @@
 import { FaGithub, FaRocket } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 const Footer = ({ darkMode }) => {
   return (
@@ -35,6 +36,10 @@ const Footer = ({ darkMode }) => {
       </p>
     </footer>
   );
+};
+
+Footer.propTypes = {
+  darkMode: PropTypes.bool.isRequired,
 };
 
 export default Footer;
