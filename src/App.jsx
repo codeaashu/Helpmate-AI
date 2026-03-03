@@ -28,6 +28,33 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [copiedIndex, setCopiedIndex] = useState(null);
   const chatEndRef = useRef(null);
+  // Profile Pop-up start
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [profileData, setProfileData] = useState({
+    firstName: "",
+    lastName: "",
+    temperature: 0.7,
+    systemInstructions: ""
+  });
+
+  // Submit Profile info
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Calling backend service
+      console.log("Sending to backend:", profileData);
+      // const response = await fetch('/api/user/profile', { ... });
+
+      setUserName(profileData.firstName); // Update the navbar name
+      setIsProfileOpen(false); // Close modal on success
+      alert("Profile Updated!");
+    } catch (error) {
+      console.error("Failed to update profile", error);
+    }
+  };
+
+  // Placeholder state for teammate to integrate backend logic later
+  const [userName, setUserName] = useState(null);
 
   // Placeholder state for teammate to integrate backend logic later
   const [userName, setUserName] = useState(null);
@@ -245,6 +272,7 @@ function App() {
             <div className="flex items-center gap-4">
               {/* Profile Button Placeholder for teammate integration */}
               <button
+                onClick={() => setIsProfileOpen(true)} // Add this onClick
                 className={`flex items-center gap-2 p-2 rounded-lg transition-all duration-300 ${darkMode ? "hover:bg-slate-700 text-slate-300" : "hover:bg-slate-200 text-slate-700"
                   }`}
                 title="Profile"
@@ -482,6 +510,85 @@ function App() {
           scroll-behavior: smooth;
         }
       `}</style>
+
+    {/* Profile Modal */}
+    {isProfileOpen && (
+      <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+        <div className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-slate-200"}
+          border rounded-3xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all`}>
+
+          {/* Modal Header */}
+          <div className="flex justify-between items-center p-6 border-b border-slate-700/50">
+            <h3 className="text-xl font-bold">User Profile</h3>
+            <button
+              onClick={() => setIsProfileOpen(false)}
+              className={`p-1 rounded-full ${darkMode ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}
+            >
+              <VolumeX className="w-6 h-6 rotate-45" /> {/* Using VolumeX as a placeholder for a close 'X' icon */}
+            </button>
+          </div>
+
+          {/* Modal Body / Form */}
+          <form onSubmit={handleProfileSubmit} className="p-6 space-y-5">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>First Name</label>
+                <input
+                  type="text"
+                  required
+                  className={`w-full p-3 rounded-xl border outline-none transition-all ${darkMode ? "bg-slate-800 border-slate-700 focus:border-blue-500" : "bg-slate-50 border-slate-200 focus:border-blue-400"}`}
+                  value={profileData.firstName}
+                  onChange={(e) => setProfileData({...profileData, firstName: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>Last Name</label>
+                <input
+                  type="text"
+                  className={`w-full p-3 rounded-xl border outline-none transition-all ${darkMode ? "bg-slate-800 border-slate-700 focus:border-blue-500" : "bg-slate-50 border-slate-200 focus:border-blue-400"}`}
+                  value={profileData.lastName}
+                  onChange={(e) => setProfileData({...profileData, lastName: e.target.value})}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>Temperature</label>
+                <span className="text-xs font-mono text-blue-500">{profileData.temperature}</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                value={profileData.temperature}
+                onChange={(e) => setProfileData({...profileData, temperature: parseFloat(e.target.value)})}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>System Instructions</label>
+              <textarea
+                rows={3}
+                className={`w-full p-3 rounded-xl border outline-none resize-none transition-all ${darkMode ? "bg-slate-800 border-slate-700 focus:border-blue-500" : "bg-slate-50 border-slate-200 focus:border-blue-400"}`}
+                placeholder="e.g. You are a helpful assistant that speaks like a pirate."
+                value={profileData.systemInstructions}
+                onChange={(e) => setProfileData({...profileData, systemInstructions: e.target.value})}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold shadow-lg transition-all active:scale-[0.98]"
+            >
+              Save Profile Settings
+            </button>
+          </form>
+        </div>
+      </div>
+    )}
     </div>
   );
 }
