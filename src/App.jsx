@@ -56,6 +56,9 @@ function App() {
   // Placeholder state for teammate to integrate backend logic later
   const [userName, setUserName] = useState(null);
 
+  // Placeholder state for teammate to integrate backend logic later
+  const [userName, setUserName] = useState(null);
+
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
