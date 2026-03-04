@@ -98,3 +98,4 @@ If you have a good knowledge in Tailwind CSS or React JS and want to contribute 
 `👍🏻 All Set! 💌`
 
 </div>
+

@@ -10,6 +10,7 @@ import {
   Check,
   Mic,
   MicOff,
+  UserCircle, // Added UserCircle icon for the profile button
 } from "lucide-react";
 
 const cache = new Map();
@@ -27,6 +28,60 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [copiedIndex, setCopiedIndex] = useState(null);
   const chatEndRef = useRef(null);
+  // Profile Pop-up start
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [profileData, setProfileData] = useState({
+    firstName: "",
+    lastName: "",
+    temperature: 0.7,
+    systemInstructions: ""
+  });
+  const [appliedProfile, setAppliedProfile] = useState({
+    firstName: "",
+    temperature: 0.7,
+    systemInstructions: ""
+  });
+
+  const normalizeTemperature = (value) => {
+    const numericValue = Number(value);
+    if (Number.isNaN(numericValue)) return 0.7;
+    return Math.min(1, Math.max(0, numericValue));
+  };
+
+  const buildCacheKey = (questionText, settings) =>
+    JSON.stringify({
+      question: questionText.trim(),
+      firstName: settings.firstName.trim(),
+      systemInstructions: settings.systemInstructions.trim(),
+      temperature: normalizeTemperature(settings.temperature),
+    });
+
+  // Submit Profile info
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Calling backend service
+      console.log("Sending to backend:", profileData);
+      // const response = await fetch('/api/user/profile', { ... });
+
+      const savedFirstName = profileData.firstName.trim();
+      const savedProfile = {
+        firstName: savedFirstName,
+        temperature: normalizeTemperature(profileData.temperature),
+        systemInstructions: profileData.systemInstructions.trim(),
+      };
+
+      setUserName(savedFirstName || null); // Update the navbar name
+      setAppliedProfile(savedProfile); // Apply settings for Gemini requests
+      setIsProfileOpen(false); // Close modal on success
+      alert("Profile Updated!");
+    } catch (error) {
+      console.error("Failed to update profile", error);
+    }
+  };
+
+  // Placeholder state for teammate to integrate backend logic later
+  const [userName, setUserName] = useState(null);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -65,7 +120,7 @@ function App() {
 
   const toggleListening = () => {
     if (!recognition) return;
-    
+
     if (isListening) {
       recognition.stop();
       setIsListening(false);
@@ -118,10 +173,17 @@ function App() {
       { type: "question", text: userQuestion },
     ]);
 
-    if (cache.has(userQuestion)) {
+    const effectiveSettings = {
+      firstName: appliedProfile.firstName.trim(),
+      temperature: normalizeTemperature(appliedProfile.temperature),
+      systemInstructions: appliedProfile.systemInstructions.trim(),
+    };
+    const cacheKey = buildCacheKey(userQuestion, effectiveSettings);
+
+    if (cache.has(cacheKey)) {
       setChatHistory((prev) => [
         ...prev,
-        { type: "answer", text: cache.get(userQuestion) },
+        { type: "answer", text: cache.get(cacheKey) },
       ]);
       setGeneratingAnswer(false);
       return;
@@ -132,6 +194,29 @@ function App() {
     const maxAttempts = 3;
     let delay = 2000;
 
+    const systemInstructionParts = [];
+    if (effectiveSettings.firstName) {
+      systemInstructionParts.push(
+        `The user's name is ${effectiveSettings.firstName}. If asked for their name, answer with this name.`
+      );
+    }
+    if (effectiveSettings.systemInstructions) {
+      systemInstructionParts.push(effectiveSettings.systemInstructions);
+    }
+
+    const requestBody = {
+      contents: [{ parts: [{ text: userQuestion }] }],
+      generationConfig: {
+        temperature: effectiveSettings.temperature,
+      },
+    };
+
+    if (systemInstructionParts.length > 0) {
+      requestBody.systemInstruction = {
+        parts: [{ text: systemInstructionParts.join("\n\n") }],
+      };
+    }
+
     while (attempts < maxAttempts) {
       try {
         const response = await fetch(
@@ -139,9 +224,7 @@ function App() {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: userQuestion }] }],
-            }),
+            body: JSON.stringify(requestBody),
           }
         );
 
@@ -156,7 +239,7 @@ function App() {
 
         if (data?.candidates?.length > 0) {
           const fullAnswer = data.candidates[0].content.parts[0].text;
-          cache.set(userQuestion, fullAnswer);
+          cache.set(cacheKey, fullAnswer);
           setChatHistory((prev) => [
             ...prev,
             { type: "answer", text: fullAnswer },
@@ -208,25 +291,22 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen ${bgGradient} ${textColor} transition-all duration-700 ${
-        isLoaded ? "opacity-100" : "opacity-0"
-      }`}
+      className={`min-h-screen ${bgGradient} ${textColor} transition-all duration-700 ${isLoaded ? "opacity-100" : "opacity-0"
+        }`}
     >
       {/* Navbar */}
       <nav
-        className={`${navBg} backdrop-blur-md border-b ${
-          darkMode ? "border-slate-700" : "border-slate-200"
-        } sticky top-0 z-50`}
+        className={`${navBg} backdrop-blur-md border-b ${darkMode ? "border-slate-700" : "border-slate-200"
+          } sticky top-0 z-50`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
               <div
-                className={`w-10 h-10 rounded-xl bg-gradient-to-br ${
-                  darkMode
-                    ? "from-blue-500 to-purple-600"
-                    : "from-blue-400 to-indigo-500"
-                } flex items-center justify-center shadow-lg`}
+                className={`w-10 h-10 rounded-xl bg-gradient-to-br ${darkMode
+                  ? "from-blue-500 to-purple-600"
+                  : "from-blue-400 to-indigo-500"
+                  } flex items-center justify-center shadow-lg`}
               >
                 <span className="text-white font-bold text-lg">H</span>
               </div>
@@ -239,20 +319,35 @@ function App() {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2.5 rounded-lg ${
-                darkMode
+
+            {/* Added container for right-side navbar items */}
+            <div className="flex items-center gap-4">
+              {/* Profile Button Placeholder for teammate integration */}
+              <button
+                onClick={() => setIsProfileOpen(true)} // Add this onClick
+                className={`flex items-center gap-2 p-2 rounded-lg transition-all duration-300 ${darkMode ? "hover:bg-slate-700 text-slate-300" : "hover:bg-slate-200 text-slate-700"
+                  }`}
+                title="Profile"
+              >
+                <UserCircle className="w-6 h-6" />
+                {/* Name will appear here once teammate sets the userName state */}
+                {userName && <span className="text-sm font-medium">{userName}</span>}
+              </button>
+
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2.5 rounded-lg ${darkMode
                   ? "bg-slate-700 hover:bg-slate-600"
                   : "bg-slate-200 hover:bg-slate-300"
-              } transition-all duration-300`}
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
+                  } transition-all duration-300`}
+              >
+                {darkMode ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -262,17 +357,17 @@ function App() {
         {chatHistory.length === 0 ? (
           <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
             <div
-              className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${
-                darkMode
-                  ? "from-blue-500 to-purple-600"
-                  : "from-blue-400 to-indigo-500"
-              } flex items-center justify-center shadow-2xl animate-pulse`}
+              className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${darkMode
+                ? "from-blue-500 to-purple-600"
+                : "from-blue-400 to-indigo-500"
+                } flex items-center justify-center shadow-2xl animate-pulse`}
             >
               <span className="text-white font-bold text-4xl">H</span>
             </div>
             <div className="text-center">
+              {/* Dynamic Greeting */}
               <h2 className="text-3xl font-bold">
-                Hello! How can I help you today?
+                {userName ? `Hello, ${userName}!` : "Hello!"} How can I help you today?
               </h2>
               <p className={`${mutedText} text-lg`}>
                 Ask me anything, I am here to assist
@@ -289,11 +384,10 @@ function App() {
                 <button
                   key={i}
                   onClick={() => setQuestion(prompt)}
-                  className={`p-4 rounded-xl ${chatBg} backdrop-blur-sm border shadow-md ${
-                    darkMode
-                      ? "border-slate-700 hover:border-blue-500"
-                      : "border-slate-200 hover:border-blue-400"
-                  } transition-all duration-300 text-center hover:scale-105`}
+                  className={`p-4 rounded-xl ${chatBg} backdrop-blur-sm border shadow-md ${darkMode
+                    ? "border-slate-700 hover:border-blue-500"
+                    : "border-slate-200 hover:border-blue-400"
+                    } transition-all duration-300 text-center hover:scale-105`}
                 >
                   <p className="font-medium">{prompt}</p>
                 </button>
@@ -306,18 +400,15 @@ function App() {
             {chatHistory.map((chat, index) => (
               <div
                 key={index}
-                className={`flex ${
-                  chat.type === "question" ? "justify-end" : "justify-start"
-                } animate-fade-in`}
+                className={`flex ${chat.type === "question" ? "justify-end" : "justify-start"
+                  } animate-fade-in`}
               >
                 <div
-                  className={`max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-lg ${
-                    chat.type === "question"
-                      ? `${userBubble} text-white`
-                      : `${aiBubble} ${
-                          darkMode ? "text-slate-100" : "text-slate-800"
-                        }`
-                  }`}
+                  className={`max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-lg ${chat.type === "question"
+                    ? `${userBubble} text-white`
+                    : `${aiBubble} ${darkMode ? "text-slate-100" : "text-slate-800"
+                    }`
+                    }`}
                 >
                   <div className="whitespace-pre-wrap break-words">
                     {chat.text}
@@ -326,9 +417,8 @@ function App() {
                     <div className="flex items-center gap-2 mt-3 pt-3 border-t border-slate-500/30">
                       <button
                         onClick={() => toggleSpeaking(chat.text)}
-                        className={`p-2 rounded-lg transition-all ${
-                          darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
-                        }`}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
+                          }`}
                         title={isSpeaking ? "Stop" : "Read aloud"}
                       >
                         {isSpeaking ? (
@@ -339,9 +429,8 @@ function App() {
                       </button>
                       <button
                         onClick={() => copyToClipboard(chat.text, index)}
-                        className={`p-2 rounded-lg transition-all ${
-                          darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
-                        }`}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
+                          }`}
                         title="Copy"
                       >
                         {copiedIndex === index ? (
@@ -352,9 +441,8 @@ function App() {
                       </button>
                       <button
                         onClick={() => shareContent(chat.text)}
-                        className={`p-2 rounded-lg transition-all ${
-                          darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
-                        }`}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? "hover:bg-slate-600" : "hover:bg-slate-200"
+                          }`}
                         title="Share"
                       >
                         <Share2 className="w-4 h-4" />
@@ -371,21 +459,18 @@ function App() {
                 >
                   <div className="flex space-x-2">
                     <div
-                      className={`w-2 h-2 rounded-full ${
-                        darkMode ? "bg-blue-400" : "bg-blue-500"
-                      } animate-bounce`}
+                      className={`w-2 h-2 rounded-full ${darkMode ? "bg-blue-400" : "bg-blue-500"
+                        } animate-bounce`}
                       style={{ animationDelay: "0ms" }}
                     ></div>
                     <div
-                      className={`w-2 h-2 rounded-full ${
-                        darkMode ? "bg-blue-400" : "bg-blue-500"
-                      } animate-bounce`}
+                      className={`w-2 h-2 rounded-full ${darkMode ? "bg-blue-400" : "bg-blue-500"
+                        } animate-bounce`}
                       style={{ animationDelay: "150ms" }}
                     ></div>
                     <div
-                      className={`w-2 h-2 rounded-full ${
-                        darkMode ? "bg-blue-400" : "bg-blue-500"
-                      } animate-bounce`}
+                      className={`w-2 h-2 rounded-full ${darkMode ? "bg-blue-400" : "bg-blue-500"
+                        } animate-bounce`}
                       style={{ animationDelay: "300ms" }}
                     ></div>
                   </div>
@@ -400,11 +485,10 @@ function App() {
         <div className="fixed bottom-20 left-0 right-0 px-4">
           <div className="max-w-4xl mx-auto">
             <div
-              className={`flex items-center gap-3 px-4 py-2 rounded-2xl shadow-lg border transition-all duration-300 ${
-                darkMode
-                  ? "bg-slate-800/90 border-slate-700"
-                  : "bg-white/90 border-slate-200"
-              }`}
+              className={`flex items-center gap-3 px-4 py-2 rounded-2xl shadow-lg border transition-all duration-300 ${darkMode
+                ? "bg-slate-800/90 border-slate-700"
+                : "bg-white/90 border-slate-200"
+                }`}
             >
               <textarea
                 value={question}
@@ -422,11 +506,10 @@ function App() {
               {recognition && (
                 <button
                   onClick={toggleListening}
-                  className={`p-3 rounded-xl transition-all duration-300 shadow-md ${
-                    isListening
-                      ? "bg-red-500 hover:bg-red-600"
-                      : "bg-slate-600 hover:bg-slate-500"
-                  }`}
+                  className={`p-3 rounded-xl transition-all duration-300 shadow-md ${isListening
+                    ? "bg-red-500 hover:bg-red-600"
+                    : "bg-slate-600 hover:bg-slate-500"
+                    }`}
                   title={isListening ? "Stop listening" : "Start voice input"}
                 >
                   {isListening ? (
@@ -479,6 +562,85 @@ function App() {
           scroll-behavior: smooth;
         }
       `}</style>
+
+    {/* Profile Modal */}
+    {isProfileOpen && (
+      <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+        <div className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-slate-200"}
+          border rounded-3xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all`}>
+
+          {/* Modal Header */}
+          <div className="flex justify-between items-center p-6 border-b border-slate-700/50">
+            <h3 className="text-xl font-bold">User Profile</h3>
+            <button
+              onClick={() => setIsProfileOpen(false)}
+              className={`p-1 rounded-full ${darkMode ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}
+            >
+              <VolumeX className="w-6 h-6 rotate-45" /> {/* Using VolumeX as a placeholder for a close 'X' icon */}
+            </button>
+          </div>
+
+          {/* Modal Body / Form */}
+          <form onSubmit={handleProfileSubmit} className="p-6 space-y-5">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>First Name</label>
+                <input
+                  type="text"
+                  required
+                  className={`w-full p-3 rounded-xl border outline-none transition-all ${darkMode ? "bg-slate-800 border-slate-700 focus:border-blue-500" : "bg-slate-50 border-slate-200 focus:border-blue-400"}`}
+                  value={profileData.firstName}
+                  onChange={(e) => setProfileData({...profileData, firstName: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>Last Name</label>
+                <input
+                  type="text"
+                  className={`w-full p-3 rounded-xl border outline-none transition-all ${darkMode ? "bg-slate-800 border-slate-700 focus:border-blue-500" : "bg-slate-50 border-slate-200 focus:border-blue-400"}`}
+                  value={profileData.lastName}
+                  onChange={(e) => setProfileData({...profileData, lastName: e.target.value})}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>Temperature</label>
+                <span className="text-xs font-mono text-blue-500">{profileData.temperature}</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                value={profileData.temperature}
+                onChange={(e) => setProfileData({...profileData, temperature: parseFloat(e.target.value)})}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className={`text-xs font-semibold uppercase tracking-wider ${mutedText}`}>System Instructions</label>
+              <textarea
+                rows={3}
+                className={`w-full p-3 rounded-xl border outline-none resize-none transition-all ${darkMode ? "bg-slate-800 border-slate-700 focus:border-blue-500" : "bg-slate-50 border-slate-200 focus:border-blue-400"}`}
+                placeholder="e.g. You are a helpful assistant that speaks like a pirate."
+                value={profileData.systemInstructions}
+                onChange={(e) => setProfileData({...profileData, systemInstructions: e.target.value})}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold shadow-lg transition-all active:scale-[0.98]"
+            >
+              Save Profile Settings
+            </button>
+          </form>
+        </div>
+      </div>
+    )}
     </div>
   );
 }
